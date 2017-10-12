@@ -20,6 +20,7 @@ namespace BackupStoreProcessor
             _account = CloudStorageAccount.Parse(connectionString);
             _tableClient = _account.CreateCloudTableClient();
             _table = _tableClient.GetTableReference(tableName);
+            _table.CreateIfNotExists();
         }
 
         public async Task<TableResult> SaveDataToTable(HubMessage data)

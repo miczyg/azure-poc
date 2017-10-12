@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
+using BackupStoreProcessor.Model;
 
 namespace BackupStoreProcessor
 {
@@ -24,14 +25,20 @@ namespace BackupStoreProcessor
             var service = new DataConnectionService();
             service.OnDataReceived += Service_OnDataReceived;
             service.GetMessagesFromHub("HostName=training-hub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=+ru85fPh+aYrEhvu0giINpchKDXBjqcciU2P7/RFnm8=");
-            //log.WriteLine(message);
+            log.WriteLine(message);
         }
 
-        private static void Service_OnDataReceived(Microsoft.ServiceBus.Messaging.EventData data)
+        private static async void Service_OnDataReceived(Microsoft.ServiceBus.Messaging.EventData data)
         {
-            var message = new { CreatedAt = DateTime.Now, Message = Encoding.UTF8.GetString(data.GetBytes()) };
-            var status = _dataTable.SaveDataToTable(message);
-            Console.WriteLine("Message received {0}", status.GetHashCode);
+            var message = new HubMessage
+            {
+                //CreatedAt = DateTime.Now,
+                Entity = Encoding.UTF8.GetString(data.GetBytes()),
+                PartitionKey = "metrics",
+                RowKey = Guid.NewGuid().ToString()
+            };
+            var status = await _dataTable.SaveDataToTable(message);
+            Console.WriteLine("Message received {0}", status.HttpStatusCode);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace BackupStoreProcessor.Model
 {
     public class HubMessage : TableEntity
     {
-        public DateTime CreatedAt { get; set; }
+        //public DateTime CreatedAt { get; set; }
         public string Entity { get; set; }
     }
 }
