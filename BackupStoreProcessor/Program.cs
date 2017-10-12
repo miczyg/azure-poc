@@ -20,8 +20,8 @@ namespace BackupStoreProcessor
             {
                 config.UseDevelopmentSettings();
             }
-            //Debug
-            // Functions.ProcessQueueMessage("", null);
+
+            Functions.ProcessQueueMessage("", null);
             var host = new JobHost();
             // The following code ensures that the WebJob will be running continuously
             host.RunAndBlock();

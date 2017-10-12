@@ -25,11 +25,7 @@ namespace BackupStoreProcessor
 
         private static void Service_OnDataReceived(Microsoft.ServiceBus.Messaging.EventData data)
         {
-            if(_log != null)
-            {
-                _log.WriteLine("Message received {0}", Encoding.UTF8.GetString(data.GetBytes()));
-            }
-            
+            Console.WriteLine("Message received {0}", Encoding.UTF8.GetString(data.GetBytes()));
         }
     }
 }
