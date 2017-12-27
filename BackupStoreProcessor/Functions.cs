@@ -19,12 +19,11 @@ namespace BackupStoreProcessor
         {
             _dataTable = new DataTableService();
             _dataTable.InitConnection(
-                "DefaultEndpointsProtocol=https;AccountName=iotstoragebackup;AccountKey=a3dcqT7uyr8GCcO6/zQlROVlSQmw6/NfB9fGlFBuEaWcdRHKUR0pRVKq/M0yzCuFhDiEB7C/El9IJ3TwecKHDQ==;EndpointSuffix=core.windows.net",
                 "iotbackup");
 
             var service = new DataConnectionService();
             service.OnDataReceived += Service_OnDataReceived;
-            service.GetMessagesFromHub("HostName=training-hub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=+ru85fPh+aYrEhvu0giINpchKDXBjqcciU2P7/RFnm8=");
+            service.GetMessagesFromHub()
             log.WriteLine(message);
         }
 
